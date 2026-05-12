@@ -134,7 +134,9 @@ let formState = {
     iPhoneModel: null,
     repairs: [],
     totalPrice: 0,
-    date: null
+    date: null,
+    openEndedModel: null,
+    openEndedIssue: null
 };
 
 // DOM Elements
@@ -187,8 +189,8 @@ function updateRepairOptions() {
 
     if (device === 'iPhone') {
         createIPhoneModelSelector();
-    } else if (device && repairPrices[device]) {
-        createRepairCheckboxes(device);
+    } else if (device) {
+        createOpenEndedForm(device);
         appointmentStep.style.display = 'block';
     }
 }
@@ -241,6 +243,66 @@ function createIPhoneModelSelector() {
     });
 
     repairCheckboxes.appendChild(modelDiv);
+}
+
+// ============================================
+// FUNCTION: Create Open-Ended Form (non-iPhone)
+// ============================================
+function createOpenEndedForm(device) {
+    repairCheckboxes.innerHTML = '';
+    formState.openEndedModel = null;
+    formState.openEndedIssue = null;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'open-ended-form';
+
+    // Device name & model input
+    const modelGroup = document.createElement('div');
+    modelGroup.className = 'form-group';
+
+    const modelLabel = document.createElement('label');
+    modelLabel.htmlFor = 'openDeviceModel';
+    modelLabel.textContent = `${device} — Device Name & Model`;
+    modelLabel.style.fontWeight = '600';
+
+    const modelInput = document.createElement('input');
+    modelInput.type = 'text';
+    modelInput.id = 'openDeviceModel';
+    modelInput.placeholder = `e.g. ${device === 'Samsung' ? 'Samsung Galaxy S24' : device === 'iPad' ? 'iPad Pro 12.9" (2022)' : 'Google Pixel 8'}`;
+    modelInput.addEventListener('input', function() {
+        formState.openEndedModel = this.value.trim();
+        summaryDevice.textContent = this.value.trim() || device;
+    });
+
+    modelGroup.appendChild(modelLabel);
+    modelGroup.appendChild(modelInput);
+
+    // Issue description textarea
+    const issueGroup = document.createElement('div');
+    issueGroup.className = 'form-group';
+
+    const issueLabel = document.createElement('label');
+    issueLabel.htmlFor = 'openIssueDesc';
+    issueLabel.textContent = 'Describe Your Issue';
+    issueLabel.style.fontWeight = '600';
+
+    const issueTextarea = document.createElement('textarea');
+    issueTextarea.id = 'openIssueDesc';
+    issueTextarea.rows = 4;
+    issueTextarea.placeholder = 'e.g. Cracked screen, phone won\'t charge, speaker not working...';
+    issueTextarea.addEventListener('input', function() {
+        formState.openEndedIssue = this.value.trim();
+        summaryRepair.textContent = this.value.trim() || '-';
+    });
+
+    issueGroup.appendChild(issueLabel);
+    issueGroup.appendChild(issueTextarea);
+
+    wrapper.appendChild(modelGroup);
+    wrapper.appendChild(issueGroup);
+    repairCheckboxes.appendChild(wrapper);
+
+    summaryPrice.textContent = 'Contact for quote';
 }
 
 // ============================================
@@ -437,9 +499,22 @@ function initServiceAreaMap() {
 // FUNCTION: Submit Booking via Formspree
 // ============================================
 function submitBooking() {
-    if (formState.repairs.length === 0) {
-        alert('Please select at least one repair type.');
-        return;
+    const isOpenEnded = formState.device && formState.device !== 'iPhone';
+
+    if (isOpenEnded) {
+        if (!formState.openEndedModel) {
+            alert('Please enter your device name and model.');
+            return;
+        }
+        if (!formState.openEndedIssue) {
+            alert('Please describe your issue.');
+            return;
+        }
+    } else {
+        if (formState.repairs.length === 0) {
+            alert('Please select at least one repair type.');
+            return;
+        }
     }
 
     const name = document.getElementById('name').value.trim();
@@ -476,9 +551,17 @@ function submitBooking() {
         day: 'numeric'
     });
 
-    const deviceDisplay = formState.iPhoneModel
-        ? `iPhone - ${formState.iPhoneModel}`
-        : formState.device;
+    const deviceDisplay = isOpenEnded
+        ? formState.openEndedModel
+        : formState.iPhoneModel
+            ? `iPhone - ${formState.iPhoneModel}`
+            : formState.device;
+
+    const repairDisplay = isOpenEnded
+        ? formState.openEndedIssue
+        : formState.repairs.join(', ');
+
+    const priceDisplay = isOpenEnded ? 'Contact for quote' : summaryPrice.textContent;
 
     fetch('https://formspree.io/f/mykoollr', {
         method: 'POST',
@@ -491,8 +574,8 @@ function submitBooking() {
             'phone': phone,
             'email': email,
             'device': deviceDisplay,
-            'repair_types': formState.repairs.join(', '),
-            'total_price': summaryPrice.textContent,
+            'repair_types': repairDisplay,
+            'total_price': priceDisplay,
             'appointment_date': formattedDate,
             'address': address,
             'notes': notes,
@@ -559,7 +642,9 @@ function resetForm() {
         iPhoneModel: null,
         repairs: [],
         totalPrice: 0,
-        date: null
+        date: null,
+        openEndedModel: null,
+        openEndedIssue: null
     };
     repairStep.style.display = 'none';
     appointmentStep.style.display = 'none';
