@@ -398,20 +398,36 @@ body {
 
     .about-content {
         flex-direction: column !important;
-        gap: 30px;
-        margin-bottom: 30px;
+        gap: 0;
+        margin-bottom: 24px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.09);
+    }
+
+    .about-image {
+        order: -1;
+        width: 100%;
+    }
+
+    .about-image img {
+        width: 100%;
+        height: 200px;
+        border-radius: 0;
+        box-shadow: none;
+        display: block;
+        transform: none !important;
     }
 
     .about-card {
         padding: 20px;
+        border-radius: 0;
+        border-left: none;
+        border-top: 4px solid var(--accent-teal);
     }
 
     .about-card h3 {
         font-size: 1.2rem;
-    }
-
-    .about-image img {
-        height: 250px;
     }
 }
 
