@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Phone Patrol - NWI Mobile Phone Repair</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">Mobile Phone Patrol</div>
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#booking">Book Now</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Northwest Indiana’s Trusted Mobile Phone Repair Service</h1>
+            <p>Professional Mobile Phone Repair at Your Door</p>
+            <p class="hero-subtitle">Serving Northwest Indiana • Fast • Reliable • Affordable</p>
+            <a href="#booking" class="cta-button">Book Your Repair Now</a>
+        </div>
+        <div class="hero-background" style="background-image: url('https://images.unsplash.com/photo-1605559424843-9e4c3ca3806d?w=1200&h=600&fit=crop');"></div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Why Choose Mobile Phone Patrol?</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="about-card">
+                        <h3>🚗 We Come to You</h3>
+                        <p>No need to travel. We drive directly to your home or office in Schererville, Dyer, Saint John, Highland, and Griffith to repair your phone on the spot.</p>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="photos/iphone-repair-133-1024x768.jpg" alt="Professional phone repair technician">
+                </div>
+            </div>
+            
+            <div class="about-content reverse">
+                <div class="about-text">
+                    <div class="about-card">
+                        <h3>💰 The Cheapest on the Market</h3>
+                        <p>Get competitive pricing without compromising quality. We believe professional repair shouldn't break the bank. Compare our prices and see the difference.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="about-card">
+                        <h3>⚡ Fast & Reliable</h3>
+                        <p>Same-day repairs for most issues. We use quality parts and provide professional service you can trust. Your phone is our priority.</p>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="photos/698c892e21bdd02cbdd76bef_warranty-1.png" alt="Phone repair tools and workbench">
+                </div>
+            </div>
+
+            <p class="booking-note">
+                <strong>Note:</strong> Bookings are available starting 2 days from the day you book to allow time for parts ordering and preparation.
+            </p>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>Transparent Pricing</h2>
+            <p class="section-subtitle">Screen Repair - Premium Quality Parts - 60-day Warranty on all repairs!</p>
+            
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>iPhone X / XS / XS Max</h3>
+                    <div class="price-item">
+                        <span class="repair-type">LCD Screen</span>
+                        <span class="price">$99</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="repair-type">OLED Screen</span>
+                        <span class="price">$129.99</span>
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <h3>iPhone 11 / 11 Pro / 11 Pro Max</h3>
+                    <div class="price-item">
+                        <span class="repair-type">LCD Screen</span>
+                        <span class="price">$104.99</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="repair-type">Screen Repair</span>
+                        <span class="price">$134.99</span>
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <h3>iPhone 12 / 12 Pro / 12 Pro Max / 12 mini</h3>
+                    <div class="price-item">
+                        <span class="repair-type">LCD Screen</span>
+                        <span class="price">$114.99</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="repair-type">OLED Screen</span>
+                        <span class="price">$144.99</span>
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <h3>iPhone 13 / 13 Pro / 13 Pro Max / 13 mini</h3>
+                    <div class="price-item">
+                        <span class="repair-type">LCD Screen</span>
+                        <span class="price">$124.99</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="repair-type">OLED</span>
+                        <span class="price">$154.99</span>
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <h3>iPhone 14 / 14 Plus / 14 Pro / 14 Pro Max</h3>
+                    <div class="price-item">
+                        <span class="repair-type">LCD Screen</span>
+                        <span class="price">$139.99</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="repair-type">OLED</span>
+                        <span class="price">$159.99</span>
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <h3>iPhone 15 / 15 Plus / 15 Pro / 15 Pro Max</h3>
+                    <div class="price-item">
+                        <span class="repair-type">LCD Screen</span>
+                        <span class="price">$139.99</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="repair-type">OLED</span>
+                        <span class="price">$159.99</span>
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <h3>iPhone 16 / 16 Plus / 16 Pro / 16 Pro Max</h3>
+                    <div class="price-item">
+                        <span class="repair-type">LCD Screen</span>
+                        <span class="price">$149.99</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="repair-type">OLED</span>
+                        <span class="price">$174.99</span>
+                    </div>
+                </div>
+
+                <div class="price-card">
+                    <h3>iPhone 17</h3>
+                    <div class="price-item">
+                        <span class="repair-type">17/17 Pro OLED Screen</span>
+                        <span class="price">$289.99</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="repair-type">Pro Max OLED</span>
+                        <span class="price">$299.99</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="screen-type-explainer">
+                <h3>LCD vs OLED — What's the Difference?</h3>
+                <div class="screen-type-grid">
+                    <div class="screen-type-card">
+                        <div class="screen-type-badge">Budget Option</div>
+                        <h4>LCD Screen</h4>
+                        <p class="screen-type-desc">A good quality replacement that works well for everyday use.</p>
+                        <ul class="screen-type-list">
+                            <li>Lower cost option</li>
+                            <li>Bright and clear display</li>
+                            <li>Colors look good, but blacks are not as deep</li>
+                            <li>Not identical to the original screen</li>
+                        </ul>
+                        <p class="screen-type-verdict">Best if you want to save money.</p>
+                    </div>
+                    <div class="screen-type-card screen-type-card--oled">
+                        <div class="screen-type-badge screen-type-badge--oled">OEM / Premium Option</div>
+                        <h4>OLED Screen</h4>
+                        <p class="screen-type-desc">This is the same type of display technology used in the original phone screen.</p>
+                        <ul class="screen-type-list">
+                            <li>Same quality as the original display</li>
+                            <li>True blacks and richer colors</li>
+                            <li>Higher contrast and sharper image</li>
+                            <li>Feels like the original phone screen</li>
+                        </ul>
+                        <p class="screen-type-verdict screen-type-verdict--oled">Best for original quality and the best overall experience.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="other-repairs">
+                <h3>Other Repairs</h3>
+                <p>Battery Replacement • Speaker Repair • Back Glass • Front Glass • Charger Port & More</p>
+                <p class="estimate-note">Pricing for other repairs varies by device. Click "Book Your Appointment" below to see an estimate.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="booking">
+        <div class="container">
+            <h2>Book Your Appointment</h2>
+            <p class="section-subtitle">Simple 3-Step Process</p>
+
+            <!-- Service Area Map -->
+            <div class="service-area-container">
+                <h3>&#128205; Our Service Area</h3>
+                <div id="serviceAreaMap"></div>
+                <p>We serve all addresses within <strong>16 miles</strong> of Schererville, IN. Enter your address below and we'll verify it automatically.</p>
+            </div>
+
+            <div class="booking-form-wrapper">
+                <form id="bookingForm" class="booking-form">
+                    <!-- Step 1: Device Selection -->
+                    <div class="form-step">
+                        <label for="deviceType">Step 1: What Device Do You Have?</label>
+                        <select id="deviceType" name="deviceType" required>
+                            <option value="">-- Select Your Device --</option>
+                            <option value="iPhone">iPhone</option>
+                            <option value="Samsung">Samsung</option>
+                            <option value="Android">Android (Other)</option>
+                            <option value="iPad">iPad</option>
+                        </select>
+                    </div>
+
+                    <!-- Step 2: Repair Type Selection -->
+                    <div class="form-step" id="repairStep" style="display: none;">
+                        <label>Step 2: What Needs to Be Repaired? (Select one or more)</label>
+                        <div id="repairCheckboxes" class="repair-checkboxes"></div>
+                        <div id="priceDisplay" class="price-display"></div>
+                    </div>
+
+                    <!-- Step 3: Appointment Details -->
+                    <div class="form-step" id="appointmentStep" style="display: none;">
+                        <div class="form-group">
+                            <label for="appointmentDate">Step 3: Preferred Date</label>
+                            <input type="date" id="appointmentDate" name="appointmentDate" required>
+                            <small>Available 2+ days from today</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Full Meetup Address(home, office, or other)</label>
+                            <input type="text" id="address" name="address" required placeholder="e.g. 123 Main St, Schererville, IN 46375">
+                            <small>Include your city and ZIP code. We'll check you're within our 16-mile service area.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Additional Notes (Optional)</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Any special instructions or details..."></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-button">Confirm & Submit</button>
+                    </div>
+                </form>
+
+                <div class="booking-summary">
+                    <h3>Summary</h3>
+                    <div class="summary-item">
+                        <span>Device:</span>
+                        <span id="summaryDevice">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Repair:</span>
+                        <span id="summaryRepair">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Estimated Price:</span>
+                        <span id="summaryPrice">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h3>📞 Call Us</h3>
+                    <p><a href="tel:2193336778">219-333-6778</a></p>
+                </div>
+                <div class="contact-card">
+                    <h3>📍 Service Areas</h3>
+                    <p>Schererville • Dyer • Saint John • Highland • Griffith • Munster • And More</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Mobile Phone Patrol. Serving Northwest Indiana with Professional Mobile Repair.</p>
+            <p>Phone: <a href="tel:2193336778">219-333-6778</a></p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
