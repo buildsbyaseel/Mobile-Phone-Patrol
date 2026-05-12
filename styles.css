@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
 /* ============================================
    MOBILE PHONE PATROL - RESPONSIVE CSS
    Light, Clean, Professional Color Palette
@@ -34,8 +36,13 @@ html {
     --warning-orange: #F8A06B;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Barlow', 'Segoe UI', sans-serif;
+    letter-spacing: -0.02em;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
     background-color: var(--bg-light);
@@ -65,8 +72,9 @@ body {
 }
 
 .logo {
+    font-family: 'Barlow', sans-serif;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--accent-teal);
     letter-spacing: -0.5px;
 }
@@ -88,10 +96,67 @@ body {
     color: var(--accent-teal);
 }
 
-@media (max-width: 768px) {
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: auto;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-dark);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.navbar.nav-open .nav-toggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.navbar.nav-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+}
+.navbar.nav-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 640px) {
+    .nav-toggle {
+        display: flex;
+    }
+
     .nav-links {
-        gap: 1rem;
-        font-size: 0.9rem;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--bg-lighter);
+        flex-direction: column;
+        gap: 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        z-index: 99;
+    }
+
+    .nav-links a {
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border-light);
+        font-size: 1rem;
+    }
+
+    .navbar.nav-open .nav-links {
+        display: flex;
+    }
+
+    .navbar .container {
+        position: relative;
     }
 }
 
@@ -166,7 +231,8 @@ body {
 
 @media (max-width: 768px) {
     .hero {
-        height: 350px;
+        height: auto;
+        padding: 60px 20px;
     }
 
     .hero h1 {
@@ -180,6 +246,16 @@ body {
     .cta-button {
         padding: 12px 30px;
         font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 50px 16px;
+    }
+
+    .hero h1 {
+        font-size: 1.6rem;
     }
 }
 
@@ -472,6 +548,14 @@ body {
     .screen-type-grid {
         grid-template-columns: 1fr;
     }
+
+    .screen-type-explainer {
+        padding: 20px 16px;
+    }
+
+    .other-repairs {
+        padding: 24px 16px;
+    }
 }
 
 .other-repairs {
@@ -634,8 +718,9 @@ body {
 
 .repair-checkbox-item input[type="checkbox"] {
     cursor: pointer;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
     margin-right: 12px;
     accent-color: var(--accent-teal);
 }
@@ -726,6 +811,7 @@ body {
 
     .booking-summary {
         position: static;
+        order: -1;
     }
 }
 

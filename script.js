@@ -583,6 +583,24 @@ document.addEventListener('DOMContentLoaded', function() {
             updateAddressWarning(this.value.trim());
         });
     }
+
+    // Hamburger menu toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const navbar = document.querySelector('.navbar');
+    if (navToggle && navbar) {
+        navToggle.addEventListener('click', function() {
+            const isOpen = navbar.classList.toggle('nav-open');
+            navToggle.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Close menu when a nav link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navbar.classList.remove('nav-open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
 });
 
 // ============================================
