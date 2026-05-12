@@ -212,7 +212,7 @@ function createIPhoneModelSelector() {
 
     models.forEach(model => {
         const item = document.createElement('div');
-        item.className = 'repair-checkbox-item';
+        item.className = 'model-select-item';
 
         const radio = document.createElement('input');
         radio.type = 'radio';
