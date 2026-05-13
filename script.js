@@ -438,27 +438,26 @@ function setMinimumDate() {
 // ============================================
 // FUNCTION: Check ZIP Code is in Service Area
 // ============================================
-function checkZipInRange(address) {
-    const match = address.match(/\b(\d{5})(?:-\d{4})?\b/);
-    if (!match) return { inRange: false, noZip: true };
-    return { inRange: VALID_ZIPS.has(match[1]), zip: match[1], noZip: false };
+function checkZipInRange(zip) {
+    if (!zip || zip.length < 5) return { inRange: false, noZip: true };
+    return { inRange: VALID_ZIPS.has(zip), zip: zip, noZip: false };
 }
 
 // ============================================
 // FUNCTION: Address ZIP Warning (inline, non-blocking)
 // ============================================
-function updateAddressWarning(address) {
+function updateAddressWarning(zip) {
     const existing = document.getElementById('addressZipWarning');
     if (existing) existing.remove();
-    if (!address) return;
+    if (!zip || zip.length < 5) return;
 
-    const zipCheck = checkZipInRange(address);
-    if (!zipCheck.noZip && !zipCheck.inRange) {
+    const zipCheck = checkZipInRange(zip);
+    if (!zipCheck.inRange) {
         const warning = document.createElement('small');
         warning.id = 'addressZipWarning';
         warning.style.cssText = 'display:block;margin-top:6px;color:var(--warning-orange);font-weight:500;';
         warning.textContent = `ZIP ${zipCheck.zip} may be outside our service area — we'll reach out to confirm after booking.`;
-        document.getElementById('address').insertAdjacentElement('afterend', warning);
+        document.getElementById('addressZip').insertAdjacentElement('afterend', warning);
     }
 }
 
@@ -520,14 +519,24 @@ function submitBooking() {
     const name = document.getElementById('name').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const email = document.getElementById('email').value.trim();
-    const address = document.getElementById('address').value.trim();
+    const street = document.getElementById('addressStreet').value.trim();
+    const city = document.getElementById('addressCity').value.trim();
+    const state = document.getElementById('addressState').value.trim();
+    const zip = document.getElementById('addressZip').value.trim();
     const date = document.getElementById('appointmentDate').value;
     const notes = document.getElementById('notes').value.trim();
 
-    if (!name || !phone || !email || !address || !date) {
+    if (!name || !phone || !email || !street || !city || !state || !zip || !date) {
         alert('Please fill in all required fields.');
         return;
     }
+
+    if (!/^\d{5}$/.test(zip)) {
+        alert('Please enter a valid 5-digit ZIP code.');
+        return;
+    }
+
+    const address = `${street}, ${city}, ${state} ${zip}`;
 
     if (!validateEmail(email)) {
         alert('Please enter a valid email address.');
@@ -662,9 +671,9 @@ document.addEventListener('DOMContentLoaded', function() {
     setMinimumDate();
     initServiceAreaMap();
 
-    const addressInput = document.getElementById('address');
-    if (addressInput) {
-        addressInput.addEventListener('input', function() {
+    const zipInput = document.getElementById('addressZip');
+    if (zipInput) {
+        zipInput.addEventListener('input', function() {
             updateAddressWarning(this.value.trim());
         });
     }

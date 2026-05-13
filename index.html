@@ -279,10 +279,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="address">Full Meetup Address(home, office, or other)</label>
-                            <input type="text" id="address" name="address" required placeholder="e.g. 123 Main St, Schererville, IN 46375">
-                            <small>Include your city and ZIP code. We'll check you're within our 16-mile service area.</small>
+                            <label for="addressStreet">Meetup Address (home, office, or other)</label>
+                            <input type="text" id="addressStreet" name="addressStreet" required placeholder="Street Address (e.g. 123 Main St)">
                         </div>
+                        <div class="address-row">
+                            <div class="form-group">
+                                <input type="text" id="addressCity" name="addressCity" required placeholder="City">
+                            </div>
+                            <div class="form-group address-state">
+                                <input type="text" id="addressState" name="addressState" required placeholder="State" maxlength="2" value="IN">
+                            </div>
+                            <div class="form-group address-zip">
+                                <input type="text" id="addressZip" name="addressZip" required placeholder="ZIP Code" maxlength="5" inputmode="numeric">
+                            </div>
+                        </div>
+                        <small class="address-hint">We'll verify you're within our 16-mile service area.</small>
 
                         <div class="form-group">
                             <label for="notes">Additional Notes (Optional)</label>

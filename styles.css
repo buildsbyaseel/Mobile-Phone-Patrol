@@ -885,6 +885,34 @@ body {
     margin-bottom: 20px;
 }
 
+.address-row {
+    display: grid;
+    grid-template-columns: 1fr 64px 96px;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.address-row .form-group {
+    margin-bottom: 0;
+}
+
+.address-hint {
+    display: block;
+    margin-bottom: 20px;
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 480px) {
+    .address-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .address-row .form-group:first-child {
+        grid-column: 1 / -1;
+    }
+}
+
 .submit-button {
     width: 100%;
     padding: 15px;
