@@ -431,7 +431,7 @@ bookingForm.addEventListener('submit', function(e) {
 function setMinimumDate() {
     const today = new Date();
     const minDate = new Date(today);
-    minDate.setDate(minDate.getDate() + 2);
+    minDate.setDate(minDate.getDate() + 1);
     appointmentDate.setAttribute('min', minDate.toISOString().split('T')[0]);
 }
 
