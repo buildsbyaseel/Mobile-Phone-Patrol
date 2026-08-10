@@ -2,7 +2,7 @@
 // MOBILE PHONE PATROL - INTERACTIVE BOOKING
 // ============================================
 
-// Service Area Configuration — 101 Willow Lane, Schererville, IN
+// Service Area Configuration —  Willow Lane, Schererville, IN
 const BASE_LAT = 41.4858;
 const BASE_LNG = -87.4558;
 const SERVICE_RADIUS_MILES = 16;
@@ -402,10 +402,10 @@ function updateRepairSelection() {
         summaryRepair.textContent = displayText.join(', ');
 
         if (hasEstimate && formState.totalPrice > 0) {
-            priceDisplay.innerHTML = `<strong>Price: $${formState.totalPrice} + Estimate for other repairs</strong><br><small>Text us at 219-333-6778 for complete pricing</small>`;
+            priceDisplay.innerHTML = `<strong>Price: $${formState.totalPrice} + Estimate for other repairs</strong><br><small>Text us at 812-665-4080 for complete pricing</small>`;
             summaryPrice.textContent = `$${formState.totalPrice} + Estimate`;
         } else if (hasEstimate) {
-            priceDisplay.innerHTML = `<strong>Price: Contact Us for Estimate</strong><br><small>Text us at 219-333-6778 for pricing</small>`;
+            priceDisplay.innerHTML = `<strong>Price: Contact Us for Estimate</strong><br><small>Text us at 812-665-4080 for pricing</small>`;
             summaryPrice.textContent = 'Estimate';
         } else {
             priceDisplay.innerHTML = `<strong>Estimated Total Price: $${formState.totalPrice}</strong>`;
@@ -601,7 +601,7 @@ function submitBooking() {
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('There was an issue submitting your booking. Please try again or call 219-333-6778.');
+        alert('There was an issue submitting your booking. Please try again or call 812-665-4080.');
     })
     .finally(() => {
         submitBtn.textContent = originalText;
@@ -634,7 +634,7 @@ function showSuccessMessage(name) {
         <p>Thank you, ${name}! We've received your booking request.</p>
         <p>You should receive a confirmation email shortly at the address you provided.</p>
         <p>We'll reach out to confirm your appointment or answer any questions.</p>
-        <p><strong>Call or text us: 219-333-6778</strong></p>
+        <p><strong>Call or text us: 812-665-4080</strong></p>
     `;
     bookingForm.parentNode.insertBefore(successMsg, bookingForm);
     successMsg.scrollIntoView({ behavior: 'smooth' });
