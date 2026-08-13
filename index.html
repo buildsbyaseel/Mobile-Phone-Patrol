@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Fast fallen tree and storm debris removal in Northwest Indiana. Driveways, sidewalks, yards, and small storm-damaged trees.">
+  <meta name="description" content="Trees in the Trunk removes fallen trees and storm debris across Northwest Indiana — driveways, sidewalks, and yards. Call or text 219-333-6778 for a quote.">
   <meta name="theme-color" content="#111815">
-  <title>NWI Storm Tree Removal | Fallen Tree Cleanup</title>
+  <title>Trees in the Trunk | Fallen Tree & Storm Debris Cleanup in NWI</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,19 +24,19 @@
       </div>
     </nav>
   </header>
-
+ 
   <main>
     <section class="hero">
       <div class="hero-overlay"></div>
       <div class="container hero-content">
-        <div class="eyebrow"><span></span> Tree cleanup across Northwest Indiana</div>
+        <div class="eyebrow"><span></span> Fallen tree cleanup across Northwest Indiana</div>
         <h1>Fallen tree?<br><em>We'll cut it up.</em></h1>
         <p class="hero-copy">
           Fast, professional tree cleanup: cut, stack, and place at the curb for pickup. Chainsaw-trained crew, insured, and safety-first.
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#contact">Request Cleanup <span>→</span></a>
-          <a class="btn btn-ghost" href="#services">See What We Do</a>
+          <a class="btn btn-ghost" href="tel:2193336778">Call/Text 219-333-6778</a>
         </div>
         <div class="hero-trust">
           <div><strong>01</strong><span>Fallen trees<br>& branches</span></div>
@@ -45,14 +45,14 @@
         </div>
       </div>
     </section>
-
+ 
     <section class="notice">
       <div class="container notice-inner">
         <span class="notice-icon">!</span>
         <p><strong>Safety first:</strong> We only take accessible, already-fallen trees and debris. We do not work on power lines, roofs, structures, vehicles, or standing/unstable trees.</p>
       </div>
     </section>
-
+ 
     <section class="section" id="services">
       <div class="container">
         <div class="section-heading">
@@ -62,7 +62,7 @@
           </div>
           <p>We focus on the jobs that need a chainsaw, some muscle, and a crew that actually shows up.</p>
         </div>
-
+ 
         <div class="service-grid">
           <article class="service-card featured">
             <div class="service-number">01</div>
@@ -92,7 +92,7 @@
         </div>
       </div>
     </section>
-
+ 
     <section class="dark-section" id="pricing">
       <div class="container">
         <div class="section-heading light">
@@ -102,7 +102,7 @@
           </div>
           <p>Every job is quoted from photos or after we see the tree. Final price depends on size, access, and cleanup.</p>
         </div>
-
+ 
         <div class="price-grid">
           <article class="price-card">
             <p class="price-label">SMALL</p>
@@ -124,7 +124,7 @@
         <p class="pricing-note">* Prices are examples, not guaranteed quotes. Disposal, hauling, difficult access, or unusually large/heavy material may change the final price.</p>
       </div>
     </section>
-
+ 
     <section class="section" id="how-it-works">
       <div class="container">
         <div class="section-heading">
@@ -152,7 +152,7 @@
         </div>
       </div>
     </section>
-
+ 
     <section class="section coverage">
       <div class="container coverage-box">
         <div>
@@ -172,23 +172,31 @@
         </div>
       </div>
     </section>
-
+ 
     <section class="section contact-section" id="contact">
       <div class="container contact-grid">
         <div class="contact-copy">
           <p class="kicker">GET A QUOTE</p>
           <h2>Send us the tree.</h2>
-          <p>Fill this out and attach photos if your form provider supports uploads. We'll contact you about the job.</p>
+          <p>Fill out the form and attach a few photos so we can quote it fast. Prefer to skip typing? Just call or text us instead.</p>
           <div class="contact-points">
-            <div><span>☎</span><div><strong>Call / Text</strong><p>219-333-6778</p></div></div>
+            <div><span>☎</span><div><strong>Call / Text</strong><p><a href="tel:2193336778">219-333-6778</a></p></div></div>
             <div><span>⌖</span><div><strong>Service area</strong><p>Northwest Indiana</p></div></div>
             <div><span>◷</span><div><strong>Storm response</strong><p>Same-day availability when possible</p></div></div>
           </div>
         </div>
-        <!-- Booking form will POST to Formspree via JavaScript. Replace FORM_ENDPOINT in script.js with your Formspree form ID. -->
-        <form id="bookingForm" class="quote-form">
-          <input type="hidden" name="_form" value="trees-in-the-trunk">
-
+        <!-- Netlify Forms: this form is detected automatically at deploy time because
+             it has data-netlify="true" and a name, and is present in the static HTML.
+             No third-party form service or API key needed. Submissions (including
+             uploaded photos) show up in Site settings > Forms in the Netlify dashboard,
+             and you can turn on email notifications there too. -->
+        <form id="bookingForm" class="quote-form" name="tree-quote" method="POST"
+              enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="tree-quote">
+          <p class="hidden-field">
+            <label>Leave this field blank: <input name="bot-field"></label>
+          </p>
+ 
           <div class="form-row">
             <label>
               Your name
@@ -199,12 +207,12 @@
               <input type="tel" name="phone" autocomplete="tel" required placeholder="(219) 555-0123">
             </label>
           </div>
-
+ 
           <label>
             Property address
             <input type="text" name="address" autocomplete="street-address" required placeholder="Street, City, IN">
           </label>
-
+ 
           <label>
             What needs to be cleared?
             <select name="job-type" required>
@@ -217,40 +225,47 @@
               <option>Other</option>
             </select>
           </label>
-
+ 
           <label>
             Tell us about the job
             <textarea name="message" rows="4" required placeholder="How big is the tree? Where did it fall? What is it blocking?"></textarea>
           </label>
-
+ 
           <label>
-            Photo link (optional)
+            Photos of the tree
+            <input type="file" name="photos" accept="image/*" multiple>
+          </label>
+ 
+          <label>
+            Photo link (optional, if easier)
             <input type="url" name="photo-link" placeholder="Google Photos / iCloud / Imgur link">
           </label>
-
+ 
           <button class="btn btn-primary form-submit" type="submit">Request My Quote <span>→</span></button>
-          <p class="form-note">By submitting, you are requesting a quote. Work does not begin until the price and scope are agreed upon.</p>
-          <div class="form-success" aria-live="polite" id="formSuccess">Thanks! Your quote request was sent.</div>
+          <p class="form-note">By submitting, you are requesting a quote. Work does not begin until the price and scope are agreed upon. Rather talk it through? Call or text <a href="tel:2193336778">219-333-6778</a>.</p>
+          <div class="form-success" aria-live="polite" id="formSuccess">Thanks! Your quote request was sent. We'll get back to you shortly — or call/text 219-333-6778 if it's urgent.</div>
         </form>
       </div>
     </section>
   </main>
-
+ 
   <footer>
     <div class="container footer-inner">
       <div>
-        <a class="brand footer-brand" href="#top"><span class="brand-mark">↗</span><span>NWI <strong>STORM</strong></span></a>
+        <a class="brand footer-brand" href="#top"><span class="brand-mark">🌳</span><span>Trees in the <strong>Trunk</strong></span></a>
         <p>Fallen tree & storm debris cleanup in Northwest Indiana.</p>
       </div>
       <div class="footer-links">
         <a href="#services">Services</a>
         <a href="#pricing">Pricing</a>
         <a href="#contact">Get a Quote</a>
+        <a href="tel:2193336778">219-333-6778</a>
       </div>
-      <p class="copyright">© <span id="year"></span> NWI Storm. All rights reserved.</p>
+      <p class="copyright">© <span id="year"></span> Trees in the Trunk. All rights reserved.</p>
     </div>
   </footer>
-
+ 
   <script src="script.js"></script>
 </body>
 </html>
+ 
