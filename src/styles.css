@@ -893,6 +893,21 @@ a.info-value:hover {
   font-weight: 500;
 }
 
+.form-error {
+  color: #a5321f;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.form-error a {
+  text-decoration: underline;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
 /* ---- Footer -------------------------------------------------------------- */
 
 .site-footer {

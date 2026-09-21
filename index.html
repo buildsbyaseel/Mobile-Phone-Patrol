@@ -17,6 +17,19 @@
     </style>
   </head>
   <body>
+    <!-- Netlify Forms detects the form at deploy time from this static copy. The React form in
+         src/App.jsx (CateringPage) posts to it by name, so the field names below must match. -->
+    <form name="catering" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="date" name="date" />
+      <input type="number" name="guests" />
+      <input type="text" name="occasion" />
+      <input type="text" name="service" />
+      <textarea name="notes"></textarea>
+    </form>
     <div id="root"></div>
   </body>
 </html>

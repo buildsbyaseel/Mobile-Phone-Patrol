@@ -11,7 +11,7 @@ import logoMark from './assets/Firefly_RemoveBackground.png';
 
 const PHONE_HREF = 'tel:+12192279074';
 const PHONE_LABEL = '(219) 227-9074';
-const ORDER_URL = 'https://squareup.com/online-ordering';
+const ORDER_URL = 'https://www.google.com/searchviewer/42?cvd=CLw_EicKJeICIjIgEhkiF9LX29IPEQoNL2cvMTF4cnFobDFtXxgAOgMI8A0%3D&g2lbs=AEzIGDuRyKq3WCkoyygSu8nDOaRHrRbe7jc4ULq0AlBQ7VYHy8ATjsJDoNw65gFjojjxCKJOr3tM&hl=en-US&gl=us&cs=1&ssta=1&fo_m=MfohQo559jFvMUOzJVpjPL1YMfZ3bInYwBDuMfaXTPp5KXh-&utm_source=search&gei=boixasnIO_qEw8cP4bWW8Qk&ei=boixasnIO_qEw8cP4bWW8Qk&fo_s=OA&opi=89978449&ebb=1&foub=mcpp';
 const INSTAGRAM_URL = 'https://www.instagram.com/mtolivegrill/?hl=en';
 const FACEBOOK_URL = 'https://www.facebook.com/p/Mt-Olive-Mediterranean-grill-61578146668186/';
 const MAP_EMBED_URL = 'https://www.google.com/maps?q=1135%20Joliet%20St%2C%20Dyer%2C%20IN%2046311&output=embed';
@@ -246,9 +246,15 @@ function Header({ page, scrolled, onNavigate }) {
               </button>
             );
           })}
-          <button type="button" className="btn btn-primary nav-cta" onClick={() => go('home', 'order')}>
+          <a
+            className="btn btn-primary nav-cta"
+            href={ORDER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+          >
             Order online
-          </button>
+          </a>
         </nav>
 
         <button
@@ -365,7 +371,7 @@ function HomePage({ onNavigate }) {
             Shawarma, gyros, grilled plates and late-night comfort food — made to feel welcoming, generous and full of character.
           </p>
           <div className="hero-actions">
-            <button type="button" className="btn btn-primary" onClick={() => onNavigate('home', 'order')}>Order online</button>
+            <a className="btn btn-primary" href={ORDER_URL} target="_blank" rel="noopener noreferrer">Order online</a>
             <button type="button" className="btn btn-ghost" onClick={() => onNavigate('menu')}>View menu</button>
           </div>
         </div>
@@ -558,11 +564,27 @@ function MenuPage() {
 }
 
 function CateringPage() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
 
-  const handleSubmit = (event) => {
+  // Netlify Forms: posts the fields to the site root, matched by `form-name` to the
+  // static copy of this form in index.html, and emails it per the Netlify dashboard settings.
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setSubmitted(true);
+    const form = event.currentTarget;
+    setStatus('sending');
+
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      });
+      if (!response.ok) throw new Error(`Form submission failed (${response.status})`);
+      form.reset();
+      setStatus('sent');
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -586,7 +608,13 @@ function CateringPage() {
           </div>
         </section>
 
-        <form className="form-card" onSubmit={handleSubmit}>
+        <form className="form-card" name="catering" method="POST" onSubmit={handleSubmit}>
+          <input type="hidden" name="form-name" value="catering" />
+          <p hidden>
+            <label>
+              Leave this field empty: <input name="bot-field" tabIndex={-1} autoComplete="off" />
+            </label>
+          </p>
           <h2>Request a quote</h2>
           <div className="form-grid">
             <label>
@@ -637,9 +665,17 @@ function CateringPage() {
           </div>
 
           <div className="form-footer">
-            <button type="submit" className="btn btn-primary">Request catering</button>
-            {submitted && (
+            <button type="submit" className="btn btn-primary" disabled={status === 'sending'}>
+              {status === 'sending' ? 'Sending…' : 'Request catering'}
+            </button>
+            {status === 'sent' && (
               <p className="form-success" role="status">Thanks! We’ll reach out to confirm your event details.</p>
+            )}
+            {status === 'error' && (
+              <p className="form-error" role="alert">
+                Sorry, something went wrong and your request wasn’t sent. Please try again or call us at{' '}
+                <a href={PHONE_HREF}>{PHONE_LABEL}</a>.
+              </p>
             )}
           </div>
         </form>
