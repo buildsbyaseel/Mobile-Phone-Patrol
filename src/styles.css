@@ -3,27 +3,49 @@
    ========================================================================== */
 
 :root {
-  --bg: #0f110f;
-  --surface: #161916;
-  --surface-2: #1c201c;
-  --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.18);
+  /* Light palette (default) */
+  --bg: #ffffff;
+  --surface: #f6f5f0;
+  --surface-2: #ecebe4;
+  --line: rgba(19, 32, 26, 0.12);
+  --line-strong: rgba(19, 32, 26, 0.3);
 
-  --text: #f3f1ea;
-  --muted: #a7ada2;
+  --text: #161a16;
+  --muted: #59605a;
 
-  --green: #86b85c;
-  --green-hover: #98c86e;
-  --on-green: #10180b;
-  --red-soft: #f0a494;
+  --green: #245a38;
+  --green-hover: #1a4529;
+  --on-green: #ffffff;
+
+  /* Dark surfaces: header, hero, order band and footer */
+  --ink: #13201a;
+  --ink-2: #1b2d23;
+  --ink-text: #f3f1ea;
+  --ink-muted: #a9b3a7;
 
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 
   --header-h: 76px;
-  --radius: 10px;
-  --radius-lg: 16px;
   --container: 1160px;
+}
+
+/* Re-point the tokens inside dark surfaces so components restyle themselves. */
+.site-header,
+.hero,
+.order-band,
+.site-footer {
+  --bg: var(--ink);
+  --surface: var(--ink);
+  --surface-2: var(--ink-2);
+  --line: rgba(255, 255, 255, 0.12);
+  --line-strong: rgba(255, 255, 255, 0.3);
+  --text: var(--ink-text);
+  --muted: var(--ink-muted);
+  --green: #a3d17c;
+  --green-hover: #b8de97;
+  --on-green: #10180b;
+  color: var(--text);
 }
 
 *,
@@ -125,7 +147,6 @@ h3 {
   min-height: 46px;
   padding: 0 1.4rem;
   border: 1px solid transparent;
-  border-radius: var(--radius);
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -171,15 +192,14 @@ h3 {
   inset: 0 0 auto 0;
   z-index: 50;
   height: var(--header-h);
-  border-bottom: 1px solid transparent;
-  background: linear-gradient(180deg, rgba(10, 12, 10, 0.72), rgba(10, 12, 10, 0));
-  transition: background-color 0.25s ease, border-color 0.25s ease, backdrop-filter 0.25s ease;
+  border-bottom: 1px solid var(--line);
+  background: var(--ink);
+  color: var(--text);
+  transition: box-shadow 0.25s ease;
 }
 
 .site-header.is-solid {
-  background: rgba(15, 17, 15, 0.92);
-  border-bottom-color: var(--line);
-  backdrop-filter: blur(14px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
 }
 
 .header-inner {
@@ -224,7 +244,6 @@ h3 {
 .nav-link {
   padding: 0.5rem 0.85rem;
   border: 0;
-  border-radius: 8px;
   background: none;
   color: rgba(243, 241, 234, 0.78);
   font-size: 0.92rem;
@@ -240,7 +259,6 @@ h3 {
 
 .nav-link.is-active {
   box-shadow: inset 0 -2px 0 var(--green);
-  border-radius: 0;
 }
 
 .nav-cta {
@@ -254,7 +272,6 @@ h3 {
   width: 44px;
   height: 44px;
   border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
   background: transparent;
   cursor: pointer;
 }
@@ -264,7 +281,6 @@ h3 {
   left: 12px;
   right: 12px;
   height: 2px;
-  border-radius: 2px;
   background: var(--text);
   transition: transform 0.25s ease;
 }
@@ -287,14 +303,38 @@ h3 {
   isolation: isolate;
 }
 
-.hero-image {
+.hero-media {
   position: absolute;
   inset: 0;
   z-index: -2;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center;
+  background: var(--ink);
+}
+
+.hero-toggle {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--header-h) + 20px);
+  right: max(16px, calc((100vw - var(--container)) / 2));
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(10, 16, 12, 0.45);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.hero-toggle:hover {
+  background: rgba(10, 16, 12, 0.75);
+  border-color: #fff;
 }
 
 .hero-shade {
@@ -302,8 +342,8 @@ h3 {
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(180deg, rgba(10, 12, 10, 0.92) 0%, rgba(10, 12, 10, 0.6) 22%, rgba(10, 12, 10, 0.6) 40%, rgba(10, 12, 10, 0.94) 100%),
-    linear-gradient(90deg, rgba(10, 12, 10, 0.55) 0%, rgba(10, 12, 10, 0) 70%);
+    linear-gradient(180deg, rgba(10, 16, 12, 0.45) 0%, rgba(10, 16, 12, 0.5) 35%, rgba(10, 16, 12, 0.88) 100%),
+    linear-gradient(90deg, rgba(10, 16, 12, 0.6) 0%, rgba(10, 16, 12, 0.15) 75%);
 }
 
 .hero-content {
@@ -313,8 +353,20 @@ h3 {
   gap: 22px;
 }
 
-.hero-content h1 {
-  max-width: 14ch;
+/* The logo PNG has transparent padding (~20% left, ~13% right, ~15% top, ~20% bottom);
+   offset it so the visible mark lines up with the text beneath it. */
+.hero-logo {
+  --logo-w: min(800px, calc((100vw - 32px) * 1.4));
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Image height is ~26% of its width, so 15% / 20% of the height is ~4% / ~5% of the width. */
+.hero-logo img {
+  width: var(--logo-w);
+  max-width: none;
+  height: auto;
+  margin: calc(var(--logo-w) * -0.03) 0 calc(var(--logo-w) * -0.04) calc(var(--logo-w) * -0.21);
 }
 
 .hero-lede {
@@ -340,7 +392,7 @@ h3 {
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .info-grid > div {
@@ -414,8 +466,7 @@ a.info-value:hover {
 .dish-card {
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
+  background: var(--bg);
   transition: border-color 0.25s ease, transform 0.25s ease;
 }
 
@@ -442,14 +493,16 @@ a.info-value:hover {
 
 .dish-meta {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
   padding: 18px 20px 20px;
 }
 
 .dish-meta span {
-  font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--green);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Order band */
@@ -500,7 +553,6 @@ a.info-value:hover {
   overflow: hidden;
   aspect-ratio: 4 / 3;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
   background: var(--surface);
 }
 
@@ -557,10 +609,9 @@ a.info-value:hover {
 
 .badge {
   padding: 2px 8px;
-  border: 1px solid rgba(240, 164, 148, 0.35);
-  border-radius: 999px;
-  background: rgba(200, 64, 44, 0.14);
-  color: var(--red-soft);
+  border: 1px solid rgba(165, 50, 31, 0.35);
+  background: rgba(165, 50, 31, 0.08);
+  color: #a5321f;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -576,7 +627,6 @@ a.info-value:hover {
   overflow: hidden;
   min-height: 480px;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
   background: var(--surface);
 }
 
@@ -586,7 +636,7 @@ a.info-value:hover {
   height: 100%;
   min-height: 480px;
   border: 0;
-  filter: grayscale(1) invert(0.92) contrast(0.9);
+  filter: grayscale(0.6);
 }
 
 /* ---- Inner pages --------------------------------------------------------- */
@@ -642,9 +692,8 @@ a.info-value:hover {
   flex: none;
   width: 18px;
   height: 18px;
-  border-radius: 50%;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.4l2.6 2.6L13 6.6' fill='none' stroke='%2310180b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.4l2.6 2.6L13 6.6' fill='none' stroke='%23ffffff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
     center / 100% no-repeat,
     var(--green);
 }
@@ -653,23 +702,16 @@ a.info-value:hover {
 
 .tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 8px;
-  padding-bottom: 4px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.tabs::-webkit-scrollbar {
-  display: none;
 }
 
 .tab {
   flex: none;
   min-height: 42px;
-  padding: 0 1.2rem;
+  padding: 0 1.05rem;
   border: 1px solid var(--line);
-  border-radius: 999px;
   background: transparent;
   color: var(--muted);
   font-size: 0.9rem;
@@ -688,6 +730,15 @@ a.info-value:hover {
   background: var(--green);
   color: var(--on-green);
   font-weight: 600;
+}
+
+.menu-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .menu-list {
@@ -732,6 +783,34 @@ a.info-value:hover {
   line-height: 1.6;
 }
 
+.menu-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-options li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--line-strong);
+  font-size: 0.9rem;
+}
+
+.menu-options span {
+  color: var(--muted);
+}
+
+.menu-options strong {
+  color: var(--green);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Catering form */
 
 .form-card {
@@ -740,7 +819,6 @@ a.info-value:hover {
   gap: 28px;
   padding: clamp(24px, 4vw, 44px);
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
   background: var(--surface);
 }
 
@@ -777,7 +855,6 @@ a.info-value:hover {
   min-height: 46px;
   padding: 0.7rem 0.95rem;
   border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
   background: var(--bg);
   color: var(--text);
   font: inherit;
@@ -787,7 +864,7 @@ a.info-value:hover {
 
 .form-grid input::placeholder,
 .form-grid textarea::placeholder {
-  color: rgba(167, 173, 162, 0.6);
+  color: rgba(89, 96, 90, 0.65);
 }
 
 .form-grid input:focus,
@@ -795,11 +872,7 @@ a.info-value:hover {
 .form-grid textarea:focus {
   outline: none;
   border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(134, 184, 92, 0.18);
-}
-
-.form-grid input[type='date'] {
-  color-scheme: dark;
+  box-shadow: 0 0 0 3px rgba(36, 90, 56, 0.18);
 }
 
 .form-grid textarea {
@@ -823,8 +896,8 @@ a.info-value:hover {
 /* ---- Footer -------------------------------------------------------------- */
 
 .site-footer {
-  border-top: 1px solid var(--line);
-  background: var(--surface);
+  background: var(--ink);
+  color: var(--text);
 }
 
 .footer-grid {
@@ -996,7 +1069,6 @@ a.info-value:hover {
   .nav-link {
     padding: 0.95rem 0;
     border-bottom: 1px solid var(--line);
-    border-radius: 0;
     text-align: left;
     font-size: 1rem;
   }
@@ -1076,12 +1148,6 @@ a.info-value:hover {
 
   .dish-grid {
     grid-template-columns: 1fr;
-  }
-
-  /* wrap instead of scrolling sideways so every category is visible */
-  .tabs {
-    flex-wrap: wrap;
-    overflow: visible;
   }
 
   .form-grid {

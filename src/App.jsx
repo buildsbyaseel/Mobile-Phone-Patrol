@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import heroImage from './assets/storefront.webp';
+import heroVideo from './assets/hero.mp4';
+import heroPoster from './assets/hero-poster.jpg';
 import chickenShaw from './assets/chickenshawbowl.webp';
 import grilledHalf from './assets/grilledhalf.webp';
 import kufta from './assets/kufta.webp';
@@ -35,49 +36,148 @@ const hours = [
   { day: 'Sunday', time: '11:00 AM – 10:00 PM' },
 ];
 
-const menuCategories = {
-  Starters: [
-    { name: 'Hummus', description: 'Classic chickpea dip with warm pita', price: '$7.95' },
-    { name: 'Baba Ghanoush', description: 'Roasted eggplant, tahini, lemon and garlic', price: '$8.50' },
-    { name: 'Falafel', description: 'Crispy chickpea fritters with tahini sauce', price: '$8.95' },
-    { name: 'French Fries', description: 'Golden crispy fries, served hot', price: '$4.95' },
-    { name: 'Grape Leaves', description: 'Stuffed rolls with rice and herbs', price: '$5.95' },
-  ],
-  Wraps: [
-    { name: 'Chicken Shawarma Wrap', description: 'Marinated chicken, lettuce, cucumber, pickles and sauce', price: '$12.95' },
-    { name: 'Gyro Wrap', description: 'Beef and lamb gyro with tzatziki and tomato', price: '$13.95' },
-    { name: 'Falafel Wrap', description: 'Crispy falafel with salad, pickles and tahini', price: '$11.95' },
-    { name: 'Steak Shawarma Wrap', description: 'Fire-grilled steak with garlic sauce and onions', price: '$14.95' },
-  ],
-  Platters: [
-    { name: 'Gyro Plate', description: 'Beef & lamb gyro with rice, fries and salad', price: '$16.95' },
-    { name: 'Chicken Shawarma Plate', description: 'Tender marinated chicken with rice and salad', price: '$15.95' },
-    { name: 'Kufta Plate', description: 'Seasoned beef and lamb skewers with rice', price: '$17.95' },
-    { name: 'Mixed Grill Plate', description: 'House mix of grilled meats with rice and salad', price: '$19.95' },
-  ],
-  Chicken: [
-    { name: 'Grilled Half Chicken', description: 'Char-grilled chicken with rice and house salad', price: '$14.95' },
-    { name: 'Chicken Tawook Plate', description: 'Lemon garlic chicken with rice and salad', price: '$15.50' },
-    { name: 'Chicken Wings', description: 'Hot or mild crispy wings with ranch or sauce', price: '$12.95' },
-    { name: 'Chicken Kabob', description: 'Juicy grilled chicken skewers with rice', price: '$16.50' },
-  ],
-  Desserts: [
-    { name: 'Baklava', description: 'Traditional flaky pastry with walnuts and honey', price: '$5.95' },
-    { name: 'Rice Pudding', description: 'Creamy and lightly spiced classic dessert', price: '$4.95' },
-    { name: 'Cheesecake', description: 'Rich dessert slice with a smooth finish', price: '$5.95' },
-  ],
-  Drinks: [
-    { name: 'Fresh Tea', description: 'Hot or cold tea selection', price: '$2.95' },
-    { name: 'Soda', description: 'Regular fountain soda', price: '$2.50' },
-    { name: 'Juice', description: 'Fresh orange or apple juice', price: '$3.50' },
-    { name: 'Water', description: 'Still or sparkling bottled water', price: '$2.00' },
-  ],
-};
+// Transcribed from the printed in-store menu. Items have either a single `price`
+// or a list of `options` (size / style variants, each with its own price).
+const menu = [
+  {
+    name: 'Charcoal Grill',
+    notes: ['All grill plates served with rice & salad.'],
+    items: [
+      { name: 'Mixed Grill', description: '3 skewers: chicken tawook, beef & lamb kofta kabab and filet mignon', price: '$25.99' },
+      { name: 'Mixed Grill Deluxe', description: '4 skewers: chicken tawook, beef & lamb kofta kabab, filet mignon and chicken kofta kabab', price: '$27.99' },
+      { name: 'Chicken Tawook Skewers', description: '2 skewers', price: '$16.99' },
+      { name: 'Beef & Lamb Kofta Kabab', description: '2 skewers', price: '$16.99' },
+      { name: 'Chicken Kofta Kabab', description: '2 skewers', price: '$16.99' },
+      { name: 'Filet Mignon Kabab', description: '2 skewers', price: '$19.99' },
+      { name: 'Half Grilled Chicken', price: '$17.99' },
+      { name: 'Lamb Chops', description: '4 pieces', price: '$25.99' },
+      {
+        name: 'Jumbo Shrimp, Grilled',
+        options: [
+          { label: '6 pieces', price: '$15.99' },
+          { label: '10 pieces', price: '$20.99' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Shawarma / Gyro / Falafel',
+    notes: [
+      'Bowls served with rice. Platters served with rice & salad.',
+      'Pita or wrap combo: add fries + drink for $4.99.',
+    ],
+    items: [
+      {
+        name: 'Chicken Shawarma',
+        options: [
+          { label: 'Pita or wrap', price: '$9.99' },
+          { label: 'Bowl', price: '$15.99' },
+          { label: 'Platter', price: '$16.99' },
+        ],
+      },
+      {
+        name: 'Beef Shawarma',
+        options: [
+          { label: 'Pita or wrap', price: '$10.99' },
+          { label: 'Bowl', price: '$16.99' },
+          { label: 'Platter', price: '$17.99' },
+        ],
+      },
+      {
+        name: 'Gyro',
+        options: [
+          { label: 'Pita or wrap', price: '$9.99' },
+          { label: 'Bowl', price: '$15.99' },
+          { label: 'Platter', price: '$16.99' },
+        ],
+      },
+      {
+        name: 'Falafel',
+        options: [
+          { label: 'Pita or wrap', price: '$7.99' },
+          { label: 'Bowl', price: '$12.99' },
+          { label: 'Platter', price: '$13.99' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Wings & Tenders',
+    notes: ['Served with rice.'],
+    items: [
+      {
+        name: 'Chicken Wings, Grilled',
+        options: [
+          { label: '6 pieces', price: '$12.99' },
+          { label: '9 pieces', price: '$15.99' },
+        ],
+      },
+      {
+        name: 'Chicken Tenders, Grilled',
+        options: [
+          { label: '4 pieces', price: '$14.99' },
+          { label: '6 pieces', price: '$17.99' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Salads',
+    items: [
+      { name: 'Arabic Salad', price: '$8.99' },
+      { name: 'Greek Salad', price: '$8.99' },
+      { name: 'Cucumber Yogurt Salad', price: '$8.99' },
+      { name: 'Arugula Salad', price: '$8.99' },
+    ],
+  },
+  {
+    name: 'Soup & Sides',
+    items: [
+      { name: 'Lentil Soup', price: '$6.99' },
+      { name: 'Hummus', price: '$6.99' },
+      { name: 'Baba Ghanouj', price: '$6.99' },
+      { name: 'Falafel', description: '5 pieces', price: '$5.99' },
+      { name: 'Pickle Plate', price: '$5.99' },
+      { name: 'French Fries', price: '$4.99' },
+    ],
+  },
+  {
+    name: 'Sauces',
+    items: [
+      { name: 'Garlic Sauce', price: '$1.49' },
+      { name: 'Tahini Sauce', price: '$1.49' },
+      { name: 'Hot Sauce', price: '$1.49' },
+      { name: 'Tzatziki Sauce', price: '$1.49' },
+    ],
+  },
+  {
+    name: 'Kids Meal',
+    items: [
+      {
+        name: 'Kids Meal',
+        description: 'Choose one: 2 grilled chicken tenders, chicken shawarma, beef shawarma or gyro. Served with rice & salad.',
+        price: '$7.49',
+      },
+    ],
+  },
+  {
+    name: 'Drinks',
+    items: [
+      { name: 'Can Soda', price: '$2.00' },
+      { name: 'Water', price: '$2.00' },
+      { name: 'Juice Drink', price: '$3.00' },
+    ],
+  },
+  {
+    name: 'Desserts',
+    items: [{ name: 'Cake', description: 'Per slice', price: '$6.99' }],
+  },
+];
 
 const popularDishes = [
-  { name: 'Grilled Half Chicken', tag: 'Chef favorite', image: grilledHalf },
-  { name: 'Mixed Grill Plate', tag: 'Popular plate', image: mixedPlat },
-  { name: 'Kufta & Rice', tag: 'Classic flavor', image: kufta },
+  { name: 'Half Grilled Chicken', price: '$17.99', image: grilledHalf },
+  { name: 'Mixed Grill', price: '$25.99', image: mixedPlat },
+  { name: 'Beef & Lamb Kofta Kabab', price: '$16.99', image: kufta },
 ];
 
 const prefersReducedMotion = () =>
@@ -202,15 +302,65 @@ function SiteFooter({ onNavigate }) {
 
 function HomePage({ onNavigate }) {
   const [today] = useState(() => (new Date().getDay() + 6) % 7);
+  const videoRef = useRef(null);
+  const [playing, setPlaying] = useState(true);
+
+  // Some browsers (e.g. iOS Low Power Mode) refuse autoplay; fall back to the poster + play button.
+  useEffect(() => {
+    const request = videoRef.current?.play();
+    if (request) request.catch(() => setPlaying(false));
+  }, []);
+
+  const toggleVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play().catch(() => setPlaying(false));
+    } else {
+      video.pause();
+    }
+  };
 
   return (
     <main>
       <section className="hero" id="home">
-        <img className="hero-image" src={heroImage} alt="" />
+        <video
+          ref={videoRef}
+          className="hero-media"
+          src={heroVideo}
+          poster={heroPoster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+        />
+        <button
+          type="button"
+          className="hero-toggle"
+          onClick={toggleVideo}
+          aria-label={playing ? 'Pause background video' : 'Play background video'}
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor">
+            {playing ? (
+              <>
+                <rect x="6" y="5" width="4" height="14" />
+                <rect x="14" y="5" width="4" height="14" />
+              </>
+            ) : (
+              <path d="M7 4.5v15l12-7.5z" />
+            )}
+          </svg>
+        </button>
         <div className="hero-shade" />
         <div className="container hero-content">
           <p className="eyebrow">Dyer, Indiana</p>
-          <h1>Mount Olive<br />Mediterranean Grill</h1>
+          <h1 className="hero-logo">
+            <img src={logoMark} alt="Mt Olive Mediterranean Grill" />
+          </h1>
           <p className="hero-lede">
             Shawarma, gyros, grilled plates and late-night comfort food — made to feel welcoming, generous and full of character.
           </p>
@@ -226,10 +376,6 @@ function HomePage({ onNavigate }) {
           <div>
             <span className="info-label">Address</span>
             <span className="info-value">1135 Joliet St, Dyer, IN 46311</span>
-          </div>
-          <div>
-            <span className="info-label">Hours</span>
-            <span className="info-value">Open late Friday &amp; Saturday</span>
           </div>
           <div>
             <span className="info-label">Phone</span>
@@ -252,7 +398,7 @@ function HomePage({ onNavigate }) {
                 </div>
                 <div className="dish-meta">
                   <h3>{dish.name}</h3>
-                  <span>{dish.tag}</span>
+                  <span>{dish.price}</span>
                 </div>
               </article>
             ))}
@@ -281,7 +427,7 @@ function HomePage({ onNavigate }) {
         <div className="container split">
           <div className="split-copy" data-reveal>
             <p className="eyebrow">Catering</p>
-            <h2 id="catering-title">Bring the flavor of Mount Olive to your event</h2>
+            <h2 id="catering-title">Bring the flavor of Mt Olive to your event</h2>
             <p className="lede">
               From family celebrations and office lunches to intimate dinners and community events, we build a menu that feels generous, memorable and crafted for the table.
             </p>
@@ -296,13 +442,13 @@ function HomePage({ onNavigate }) {
       <section className="section section-alt" id="about" aria-labelledby="about-title">
         <div className="container split split-reverse">
           <div className="split-media" data-reveal>
-            <img src={storefront} alt="Mount Olive storefront on Joliet Street" loading="lazy" />
+            <img src={storefront} alt="Mt Olive storefront on Joliet Street" loading="lazy" />
           </div>
           <div className="split-copy" data-reveal style={{ '--delay': '120ms' }}>
             <p className="eyebrow">About us</p>
             <h2 id="about-title">Authentic Middle Eastern flavor</h2>
             <p className="lede">
-              Mount Olive Mediterranean Grill brings together bold, comforting flavors with the warmth of a neighborhood favorite. From shawarma and grilled plates to fresh salads, family-style favorites and late-night comfort food, every dish is made to feel welcoming and generous.
+              Mt Olive Mediterranean Grill brings together bold, comforting flavors with the warmth of a neighborhood favorite. From shawarma and grilled plates to fresh salads, family-style favorites and late-night comfort food, every dish is made to feel welcoming and generous.
             </p>
           </div>
         </div>
@@ -335,7 +481,7 @@ function HomePage({ onNavigate }) {
 
           <div className="map-frame" data-reveal style={{ '--delay': '120ms' }}>
             <iframe
-              title="Map showing Mount Olive in Dyer, Indiana"
+              title="Map showing Mt Olive in Dyer, Indiana"
               src={MAP_EMBED_URL}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -348,44 +494,64 @@ function HomePage({ onNavigate }) {
 }
 
 function MenuPage() {
-  const categories = Object.keys(menuCategories);
-  const [selected, setSelected] = useState(categories[0]);
+  const [selected, setSelected] = useState(menu[0].name);
+  const category = menu.find((entry) => entry.name === selected);
 
   return (
     <main className="page">
       <div className="container">
         <header className="page-head">
-          <p className="eyebrow">Mount Olive Mediterranean Grill</p>
+          <p className="eyebrow">Mt Olive Mediterranean Grill</p>
           <h1>Our menu</h1>
-          <p className="lede">Grilled to order and served fresh. Prices are subject to change.</p>
+          <p className="lede">Fresh, flavorful and made to order — dine in, carry out or catering.</p>
         </header>
 
         <div className="tabs" role="tablist" aria-label="Menu categories">
-          {categories.map((category) => (
+          {menu.map((entry) => (
             <button
-              key={category}
+              key={entry.name}
               type="button"
               role="tab"
-              aria-selected={category === selected}
-              className={`tab${category === selected ? ' is-active' : ''}`}
-              onClick={() => setSelected(category)}
+              aria-selected={entry.name === selected}
+              className={`tab${entry.name === selected ? ' is-active' : ''}`}
+              onClick={() => setSelected(entry.name)}
             >
-              {category}
+              {entry.name}
             </button>
           ))}
         </div>
 
-        <ul className="menu-list" key={selected}>
-          {menuCategories[selected].map((item, index) => (
-            <li key={item.name} className="menu-item" style={{ '--delay': `${index * 50}ms` }}>
-              <div className="menu-item-row">
-                <h3>{item.name}</h3>
-                <span className="menu-item-price">{item.price}</span>
-              </div>
-              <p>{item.description}</p>
-            </li>
-          ))}
-        </ul>
+        <div key={selected}>
+          {category.notes && (
+            <div className="menu-notes">
+              {category.notes.map((note) => (
+                <p key={note}>{note}</p>
+              ))}
+            </div>
+          )}
+
+          <ul className="menu-list">
+            {category.items.map((item, index) => (
+              <li key={item.name} className="menu-item" style={{ '--delay': `${index * 50}ms` }}>
+                <div className="menu-item-row">
+                  <h3>{item.name}</h3>
+                  {item.price && <span className="menu-item-price">{item.price}</span>}
+                </div>
+                {item.description && <p>{item.description}</p>}
+                {item.options && (
+                  <ul className="menu-options">
+                    {item.options.map((option) => (
+                      <li key={option.label}>
+                        <span>{option.label}</span>
+                        <strong>{option.price}</strong>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </main>
   );
