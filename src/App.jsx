@@ -7,7 +7,7 @@ import grilledHalf from './assets/grilledhalf.webp';
 import kufta from './assets/kufta.webp';
 import mixedPlat from './assets/mixedplat.webp';
 import storefront from './assets/storefront.webp';
-import logoMark from './assets/Firefly_RemoveBackground.png';
+import logoMark from './assets/logo.png';
 
 const PHONE_HREF = 'tel:+12192279074';
 const PHONE_LABEL = '(219) 227-9074';
